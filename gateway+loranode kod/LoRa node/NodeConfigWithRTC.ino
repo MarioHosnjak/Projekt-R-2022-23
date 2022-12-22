@@ -1,6 +1,8 @@
 #include <MKRWAN.h>
 #include <Arduino_MKRENV.h>
+#include "RTClib.h"
 
+RTC_PCF8523 rtc;
 LoRaModem modem;
 String appEui;
 String appKey;
@@ -44,12 +46,26 @@ void setup() {
     while (1) {}
   }
 
-  //delay(5000);  
+  if (! rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    Serial.flush();
+    while (1) delay(10);
+  }
+
+  if (! rtc.initialized() || rtc.lostPower()) {
+    Serial.println("RTC is NOT initialized, let's set the time!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+
+  rtc.start();  
 }
 
 void loop() {
 
-  float temperature = ENV.readTemperature();
+  DateTime now = rtc.now();
+
+  if(now.unixtime() % 10 == 5){
+    float temperature = ENV.readTemperature();
   float humidity    = ENV.readHumidity();
   float pressure    = ENV.readPressure();
   float illuminance = ENV.readIlluminance();
@@ -90,8 +106,6 @@ void loop() {
   Serial.print("UV Index    = ");
   Serial.println(uvIndex);
 
-  Serial.println();
-
   int err;
   modem.setPort(3);
   modem.beginPacket();
@@ -108,6 +122,8 @@ void loop() {
   } else {
     Serial.println("Error sending message :(");
   }
+  Serial.println();
+  }
 
-  delay(5000);
+  delay(1000);
 }
