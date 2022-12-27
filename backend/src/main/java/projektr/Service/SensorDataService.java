@@ -1,18 +1,31 @@
 package projektr.Service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import projektr.Model.Data;
-import projektr.Model.DecodedPayload;
-import projektr.Model.JsonModel;
-import projektr.Model.UplinkMessage;
+import org.springframework.stereotype.Service;
+import projektr.Model.*;
+import projektr.Repository.SensorDataRepository;
 
+@Service
+@AllArgsConstructor
 public class SensorDataService {
+
+    //SensorDataRepository sdr = new SensorDataRepository();
+    private final SensorDataRepository sdr;
+
+    public Iterable<Measurement> findAll() {
+        return sdr.findAll();
+    }
 
     public ResponseEntity<String> addData(JsonModel model){
         Data data = model.getData();
         UplinkMessage um = data.getUplinkMessage();
         DecodedPayload decodedPayload = um.getDecodedPayload();
+        System.out.println("Sensor Id: " + data.getEndDeviceIds().getDeviceId());
+        System.out.println("Sensor Name: " + data.getEndDeviceIds().getApplicationIds().getApplicationId());
+        System.out.println("Time: " + data.getReceivedAt());
+        System.out.println("------------Data below------------");
         System.out.println("Humidity: " + decodedPayload.getHumidity());
         System.out.println("Temp: " + decodedPayload.getTemperature());
         System.out.println("Pressure: " + decodedPayload.getPressure());
