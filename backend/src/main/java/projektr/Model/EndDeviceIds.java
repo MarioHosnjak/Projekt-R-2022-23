@@ -13,25 +13,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "device_id",
-    "application_ids",
-    "dev_eui",
-    "join_eui",
-    "dev_addr"
+    "device_id"
 })
 @Generated("jsonschema2pojo")
 public class EndDeviceIds {
 
     @JsonProperty("device_id")
     private String deviceId;
-    @JsonProperty("application_ids")
-    private ApplicationIds__1 applicationIds;
-    @JsonProperty("dev_eui")
-    private String devEui;
-    @JsonProperty("join_eui")
-    private String joinEui;
-    @JsonProperty("dev_addr")
-    private String devAddr;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -43,46 +31,6 @@ public class EndDeviceIds {
     @JsonProperty("device_id")
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
-    }
-
-    @JsonProperty("application_ids")
-    public ApplicationIds__1 getApplicationIds() {
-        return applicationIds;
-    }
-
-    @JsonProperty("application_ids")
-    public void setApplicationIds(ApplicationIds__1 applicationIds) {
-        this.applicationIds = applicationIds;
-    }
-
-    @JsonProperty("dev_eui")
-    public String getDevEui() {
-        return devEui;
-    }
-
-    @JsonProperty("dev_eui")
-    public void setDevEui(String devEui) {
-        this.devEui = devEui;
-    }
-
-    @JsonProperty("join_eui")
-    public String getJoinEui() {
-        return joinEui;
-    }
-
-    @JsonProperty("join_eui")
-    public void setJoinEui(String joinEui) {
-        this.joinEui = joinEui;
-    }
-
-    @JsonProperty("dev_addr")
-    public String getDevAddr() {
-        return devAddr;
-    }
-
-    @JsonProperty("dev_addr")
-    public void setDevAddr(String devAddr) {
-        this.devAddr = devAddr;
     }
 
     @JsonAnyGetter

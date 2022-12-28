@@ -11,7 +11,6 @@ import projektr.Service.SensorDataService;
 @RequestMapping(path = "/sensordata")//, consumes = {"application/json"})
 public class SensorDataController {
 
-    //SensorDataService sds = new SensorDataService();
     private SensorDataService sds;
 
     @GetMapping("/add")
@@ -19,9 +18,8 @@ public class SensorDataController {
         System.out.println("Get works");
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/measurements")
-    ResponseEntity<?> getAllMeasurements() {
+    public ResponseEntity<?> getAllMeasurements(){
         return ResponseEntity.ok(sds.findAll());
     }
 

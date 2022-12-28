@@ -11,7 +11,6 @@ import projektr.Repository.SensorDataRepository;
 @AllArgsConstructor
 public class SensorDataService {
 
-    //SensorDataRepository sdr = new SensorDataRepository();
     private final SensorDataRepository sdr;
 
     public Iterable<Measurement> findAll() {
@@ -19,12 +18,10 @@ public class SensorDataService {
     }
 
     public ResponseEntity<String> addData(JsonModel model){
-        Data data = model.getData();
-        UplinkMessage um = data.getUplinkMessage();
+        UplinkMessage um = model.getUplinkMessage();
         DecodedPayload decodedPayload = um.getDecodedPayload();
-        System.out.println("Sensor Id: " + data.getEndDeviceIds().getDeviceId());
-        System.out.println("Sensor Name: " + data.getEndDeviceIds().getApplicationIds().getApplicationId());
-        System.out.println("Time: " + data.getReceivedAt());
+        System.out.println("Sensor Id: " + model.getEndDeviceIds().getDeviceId());
+        System.out.println("Time: " + model.getReceivedAt());
         System.out.println("------------Data below------------");
         System.out.println("Humidity: " + decodedPayload.getHumidity());
         System.out.println("Temp: " + decodedPayload.getTemperature());
@@ -33,6 +30,10 @@ public class SensorDataService {
         System.out.println("uva: " + decodedPayload.getUva());
         System.out.println("uvb: " + decodedPayload.getUvb());
         System.out.println("uvindex: " + decodedPayload.getUVIndex());
+        Measurement m = new Measurement(decodedPayload.getHumidity(), decodedPayload.getIlluminance(), "location",
+                decodedPayload.getPressure(), model.getEndDeviceIds().getDeviceId(), decodedPayload.getTemperature(),
+                model.getReceivedAt(), decodedPayload.getUva(), decodedPayload.getUvb(), decodedPayload.getUVIndex());
+        sdr.save(m);
         return new ResponseEntity<String>("Sensor data added", HttpStatus.ACCEPTED);
     }
 

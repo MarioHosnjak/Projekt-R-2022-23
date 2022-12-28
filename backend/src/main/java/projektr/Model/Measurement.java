@@ -19,46 +19,49 @@ import java.time.OffsetDateTime;
 public class Measurement {
     @Id
     @Column(nullable = false, updatable = false)
-    @SequenceGenerator(
-            name = "primary_sequence",
-            sequenceName = "primary_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY,
-            generator = "primary_sequence"
-    )
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
-    private OffsetDateTime time;
-
-    @Column
+    @Column(name = "humidity")
     private Double humidity;
 
-    @Column
+    @Column(name = "illuminance")
     private Double illuminance;
 
-    @Column
-    private Double pressure;
-
-    @Column
-    private Double temperature;
-
-    @Column
-    private Double uva;
-
-    @Column
-    private Double uvb;
-
-    @Column
-    private Double uvindex;
-
-    @Column(length = 40)
+    @Column(name="location", length = 40)
     private String location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sensorId")
-    private Sensor sensor;
+    @Column(name = "pressure")
+    private Double pressure;
 
+    @Column(name="sensorid", nullable = false)
+    private String sensorId;
+
+    @Column(name = "temperature")
+    private Double temperature;
+
+    @Column(name = "time", nullable = false)
+    private String time;
+
+    @Column(name = "uva")
+    private Double uva;
+
+    @Column(name = "uvb")
+    private Double uvb;
+
+    @Column(name = "uvindex")
+    private Double uvindex;
+
+    public Measurement(Double humidity, Double illuminance, String location, Double pressure, String sensorId, Double temperature, String time, Double uva, Double uvb, Double uvindex) {
+        this.humidity = humidity;
+        this.illuminance = illuminance;
+        this.location = location;
+        this.pressure = pressure;
+        this.sensorId = sensorId;
+        this.temperature = temperature;
+        this.time = time;
+        this.uva = uva;
+        this.uvb = uvb;
+        this.uvindex = uvindex;
+    }
 }

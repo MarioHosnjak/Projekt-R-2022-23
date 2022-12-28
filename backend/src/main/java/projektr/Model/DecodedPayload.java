@@ -33,11 +33,11 @@ public class DecodedPayload {
     @JsonProperty("Temperature")
     private Double temperature;
     @JsonProperty("UVA")
-    private Integer uva;
+    private Double uva;
     @JsonProperty("UVB")
-    private Integer uvb;
+    private Double uvb;
     @JsonProperty("UVIndex")
-    private Integer uVIndex;
+    private Double uVIndex;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -82,32 +82,32 @@ public class DecodedPayload {
     }
 
     @JsonProperty("UVA")
-    public Integer getUva() {
+    public Double getUva() {
         return uva;
     }
 
     @JsonProperty("UVA")
-    public void setUva(Integer uva) {
+    public void setUva(Double uva) {
         this.uva = uva;
     }
 
     @JsonProperty("UVB")
-    public Integer getUvb() {
+    public Double getUvb() {
         return uvb;
     }
 
     @JsonProperty("UVB")
-    public void setUvb(Integer uvb) {
+    public void setUvb(Double uvb) {
         this.uvb = uvb;
     }
 
     @JsonProperty("UVIndex")
-    public Integer getUVIndex() {
+    public Double getUVIndex() {
         return uVIndex;
     }
 
     @JsonProperty("UVIndex")
-    public void setUVIndex(Integer uVIndex) {
+    public void setUVIndex(Double uVIndex) {
         this.uVIndex = uVIndex;
     }
 

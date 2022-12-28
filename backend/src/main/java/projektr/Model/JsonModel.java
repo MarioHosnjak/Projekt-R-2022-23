@@ -2,7 +2,6 @@
 package projektr.Model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -14,128 +13,50 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "name",
-    "time",
-    "identifiers",
-    "data",
-    "correlation_ids",
-    "origin",
-    "context",
-    "visibility",
-    "unique_id"
+    "end_device_ids",
+    "received_at",
+    "uplink_message"
 })
 @Generated("jsonschema2pojo")
 public class JsonModel {
 
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("time")
-    private String time;
-    @JsonProperty("identifiers")
-    private List<Identifier> identifiers = null;
-    @JsonProperty("data")
-    private Data data;
-    @JsonProperty("correlation_ids")
-    private List<String> correlationIds = null;
-    @JsonProperty("origin")
-    private String origin;
-    @JsonProperty("context")
-    private Context context;
-    @JsonProperty("visibility")
-    private Visibility visibility;
-    @JsonProperty("unique_id")
-    private String uniqueId;
+    @JsonProperty("end_device_ids")
+    private EndDeviceIds endDeviceIds;
+    @JsonProperty("received_at")
+    private String receivedAt;
+    @JsonProperty("uplink_message")
+    private UplinkMessage uplinkMessage;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("end_device_ids")
+    public EndDeviceIds getEndDeviceIds() {
+        return endDeviceIds;
     }
 
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("end_device_ids")
+    public void setEndDeviceIds(EndDeviceIds endDeviceIds) {
+        this.endDeviceIds = endDeviceIds;
     }
 
-    @JsonProperty("time")
-    public String getTime() {
-        return time;
+    @JsonProperty("received_at")
+    public String getReceivedAt() {
+        return receivedAt;
     }
 
-    @JsonProperty("time")
-    public void setTime(String time) {
-        this.time = time;
+    @JsonProperty("received_at")
+    public void setReceivedAt(String receivedAt) {
+        this.receivedAt = receivedAt;
     }
 
-    @JsonProperty("identifiers")
-    public List<Identifier> getIdentifiers() {
-        return identifiers;
+    @JsonProperty("uplink_message")
+    public UplinkMessage getUplinkMessage() {
+        return uplinkMessage;
     }
 
-    @JsonProperty("identifiers")
-    public void setIdentifiers(List<Identifier> identifiers) {
-        this.identifiers = identifiers;
-    }
-
-    @JsonProperty("data")
-    public Data getData() {
-        return data;
-    }
-
-    @JsonProperty("data")
-    public void setData(Data data) {
-        this.data = data;
-    }
-
-    @JsonProperty("correlation_ids")
-    public List<String> getCorrelationIds() {
-        return correlationIds;
-    }
-
-    @JsonProperty("correlation_ids")
-    public void setCorrelationIds(List<String> correlationIds) {
-        this.correlationIds = correlationIds;
-    }
-
-    @JsonProperty("origin")
-    public String getOrigin() {
-        return origin;
-    }
-
-    @JsonProperty("origin")
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    @JsonProperty("context")
-    public Context getContext() {
-        return context;
-    }
-
-    @JsonProperty("context")
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    @JsonProperty("visibility")
-    public Visibility getVisibility() {
-        return visibility;
-    }
-
-    @JsonProperty("visibility")
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
-    @JsonProperty("unique_id")
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
-    @JsonProperty("unique_id")
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
+    @JsonProperty("uplink_message")
+    public void setUplinkMessage(UplinkMessage uplinkMessage) {
+        this.uplinkMessage = uplinkMessage;
     }
 
     @JsonAnyGetter
