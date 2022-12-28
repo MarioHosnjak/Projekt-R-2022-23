@@ -1,1 +1,1 @@
-Tu je bitno jedino decodedPayload (mislim da je 42. red) i eventualno datum-vrijeme podatak
+Izbaceni svi nepotrebni dijelovi iz jsona
