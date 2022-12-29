@@ -1,114 +1,17 @@
 {
-  "name": "as.up.data.forward",
-  "time": "2022-12-20T14:56:56.182066896Z",
-  "identifiers": [
-    {
-      "device_ids": {
-        "device_id": "eui-a8610a32373e7208",
-        "application_ids": {
-          "application_id": "lora-test-senzor"
-        },
-        "dev_eui": "A8610A32373E7208",
-        "join_eui": "2462ABFFFEB565E8",
-        "dev_addr": "260B587D"
-      }
+  "end_device_ids": {
+    "device_id": "eui-a8610a32373e7208"
+  },
+  "received_at": "2022-12-25T17:45:54.552653369Z",
+  "uplink_message": {
+    "decoded_payload": {
+      "Humidity": 77.08,
+      "Illuminance": 1.93,
+      "Pressure": 101.02,
+      "Temperature": 19.84,
+      "UVA": 6,
+      "UVB": 0,
+      "UVIndex": 0
     }
-  ],
-  "data": {
-    "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
-    "end_device_ids": {
-      "device_id": "eui-a8610a32373e7208",
-      "application_ids": {
-        "application_id": "lora-test-senzor"
-      },
-      "dev_eui": "A8610A32373E7208",
-      "join_eui": "2462ABFFFEB565E8",
-      "dev_addr": "260B587D"
-    },
-    "correlation_ids": [
-      "as:up:01GMR0K8VH84K2NDZ2B99X8WHD",
-      "gs:conn:01GMR0GR1HR5R1N2E8BVTZPVV3",
-      "gs:up:host:01GMR0GR1S2DNAD60EWE7RGAXG",
-      "gs:uplink:01GMR0K8MX2K370EPARF67XQJM",
-      "ns:uplink:01GMR0K8MYSNKRWHBJMY2Y1257",
-      "rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01GMR0K8MYJ7ST4DP9JQE6H5MN",
-      "rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01GMR0K8VGR732NWC34KRXAXGP"
-    ],
-    "received_at": "2022-12-20T14:56:56.176436780Z",
-    "uplink_message": {
-      "session_key_id": "AYUwCYPKblhdGkta20VMew==",
-      "f_port": 3,
-      "frm_payload": "3gZrFp8nCARYAgAAAAA=",
-      "decoded_payload": {
-        "Humidity": 57.39,
-        "Illuminance": 10.32,
-        "Pressure": 101.43,
-        "Temperature": 17.58,
-        "UVA": 6,
-        "UVB": 0,
-        "UVIndex": 0
-      },
-      "rx_metadata": [
-        {
-          "gateway_ids": {
-            "gateway_id": "lora-senzor-gateway",
-            "eui": "2462ABFFFEB565E8"
-          },
-          "timestamp": 85140060,
-          "rssi": -31,
-          "channel_rssi": -31,
-          "snr": 13.8,
-          "uplink_token": "CiEKHwoTbG9yYS1zZW56b3ItZ2F0ZXdheRIIJGKr//61ZegQ3MTMKBoMCLeah50GELSQx8wDIODu+JW9Ag==",
-          "channel_index": 1,
-          "received_at": "2022-12-20T14:56:55.899532808Z"
-        }
-      ],
-      "settings": {
-        "data_rate": {
-          "lora": {
-            "bandwidth": 125000,
-            "spreading_factor": 12,
-            "coding_rate": "4/5"
-          }
-        },
-        "frequency": "868300000",
-        "timestamp": 85140060
-      },
-      "received_at": "2022-12-20T14:56:55.966802569Z",
-      "confirmed": true,
-      "consumed_airtime": "1.646592s",
-      "version_ids": {
-        "brand_id": "arduino",
-        "model_id": "mkr-wan-1310",
-        "hardware_version": "1.0",
-        "firmware_version": "1.2.3",
-        "band_id": "EU_863_870"
-      },
-      "network_ids": {
-        "net_id": "000013",
-        "tenant_id": "ttn",
-        "cluster_id": "eu1",
-        "cluster_address": "eu1.cloud.thethings.network"
-      }
-    }
-  },
-  "correlation_ids": [
-    "as:up:01GMR0K8VH84K2NDZ2B99X8WHD",
-    "gs:conn:01GMR0GR1HR5R1N2E8BVTZPVV3",
-    "gs:up:host:01GMR0GR1S2DNAD60EWE7RGAXG",
-    "gs:uplink:01GMR0K8MX2K370EPARF67XQJM",
-    "ns:uplink:01GMR0K8MYSNKRWHBJMY2Y1257",
-    "rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01GMR0K8MYJ7ST4DP9JQE6H5MN",
-    "rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01GMR0K8VGR732NWC34KRXAXGP"
-  ],
-  "origin": "ip-10-100-5-128.eu-west-1.compute.internal",
-  "context": {
-    "tenant-id": "CgN0dG4="
-  },
-  "visibility": {
-    "rights": [
-      "RIGHT_APPLICATION_TRAFFIC_READ"
-    ]
-  },
-  "unique_id": "01GMR0K8VPMYC5RMXQWK1CZYE5"
+  }
 }
