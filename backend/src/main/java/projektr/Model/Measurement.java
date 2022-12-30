@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Getter
@@ -41,7 +42,7 @@ public class Measurement {
     private Double temperature;
 
     @Column(name = "time", nullable = false)
-    private String time;
+    private LocalDateTime time;
 
     @Column(name = "uva")
     private Double uva;
@@ -52,7 +53,7 @@ public class Measurement {
     @Column(name = "uvindex")
     private Double uvindex;
 
-    public Measurement(Double humidity, Double illuminance, String location, Double pressure, String sensorId, Double temperature, String time, Double uva, Double uvb, Double uvindex) {
+    public Measurement(Double humidity, Double illuminance, String location, Double pressure, String sensorId, Double temperature, LocalDateTime time, Double uva, Double uvb, Double uvindex) {
         this.humidity = humidity;
         this.illuminance = illuminance;
         this.location = location;

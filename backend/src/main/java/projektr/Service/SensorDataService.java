@@ -7,21 +7,41 @@ import org.springframework.stereotype.Service;
 import projektr.Model.*;
 import projektr.Repository.SensorDataRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class SensorDataService {
 
     private final SensorDataRepository sdr;
 
-    public Iterable<Measurement> findAll() {
-        return sdr.findAll();
+//    public List<Measurement> findAll() {
+//        return sdr.findAll();
+//    }
+
+    public List<String> findSensorIds(){
+        return sdr.findSensorIds();
+    }
+
+    public Measurement findLatestById(SensorIdCommand command){
+        String sensorId = command.getSensorId();
+        return sdr.findLatestById(sensorId);
+    }
+
+    public List<Measurement> findAllForId(SensorIdCommand command){
+        String sensorId = command.getSensorId();
+        return sdr.findAllForId(sensorId);
     }
 
     public ResponseEntity<String> addData(JsonModel model){
         UplinkMessage um = model.getUplinkMessage();
         DecodedPayload decodedPayload = um.getDecodedPayload();
+        String[] time = model.getReceivedAt().split("\\.");
+        String timestr = time[0];
+        LocalDateTime timesql = LocalDateTime.parse(timestr);
         System.out.println("Sensor Id: " + model.getEndDeviceIds().getDeviceId());
-        System.out.println("Time: " + model.getReceivedAt());
+        System.out.println("Time: " + timestr);
         System.out.println("------------Data below------------");
         System.out.println("Humidity: " + decodedPayload.getHumidity());
         System.out.println("Temp: " + decodedPayload.getTemperature());
@@ -32,7 +52,7 @@ public class SensorDataService {
         System.out.println("uvindex: " + decodedPayload.getUVIndex());
         Measurement m = new Measurement(decodedPayload.getHumidity(), decodedPayload.getIlluminance(), "location",
                 decodedPayload.getPressure(), model.getEndDeviceIds().getDeviceId(), decodedPayload.getTemperature(),
-                model.getReceivedAt(), decodedPayload.getUva(), decodedPayload.getUvb(), decodedPayload.getUVIndex());
+                timesql, decodedPayload.getUva(), decodedPayload.getUvb(), decodedPayload.getUVIndex());
         sdr.save(m);
         return new ResponseEntity<String>("Sensor data added", HttpStatus.ACCEPTED);
     }
