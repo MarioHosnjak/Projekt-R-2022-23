@@ -1,23 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import HomePageWrapper from './components/wrappers/homePageWrapper';
+import NotFound from './container/notFound/notFound';
+import SenzorPageWrapper from './components/wrappers/senzorPageWrapper';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route
+          path={"/"}
+          element={<HomePageWrapper/>}
+        />
+        <Route
+          path={"/senzor/:id"}
+          element={<SenzorPageWrapper/>}
+        />
+        <Route
+          path={"*"}
+          element={<NotFound/>}
+        />
+      </Routes>
     </div>
   );
 }
