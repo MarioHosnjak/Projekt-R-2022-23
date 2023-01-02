@@ -27,21 +27,25 @@ public class SensorDataController {
 //        return sds.findAll();
 //    }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/ids")
     public List<String> getSensorIds(){
         return sds.findSensorIds();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/findlatest")
     public Measurement findLatestById(@RequestBody SensorIdCommand command){
         return sds.findLatestById(command);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/all")
     public List<Measurement> findAllForId(@RequestBody SensorIdCommand command){
         return sds.findAllForId(command);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/add")
     public ResponseEntity<String> addData(@RequestBody JsonModel model){
         return sds.addData(model);
