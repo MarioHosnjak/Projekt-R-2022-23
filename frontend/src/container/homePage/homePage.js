@@ -1,14 +1,29 @@
+import React, { useState, useEffect } from 'react';
+
 import "./homePage.css"
 import { getAllSensors } from "../../utils/axios/backendcalls/senzorEndPoints";
 
-const HomePage = async () => {
-    const senzorIds=await getAllSensors();
+const HomePage = () => {
+    const [senzorIds, setSenzorIds] = useState([]);
+
+    useEffect(() => {
+        getAllSensors().then((res) => {
+            //console.log(res);
+            setSenzorIds(res);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+    //const senzorIds=await getAllSensors();
     return (
         <div className="">
             {
                 senzorIds.map((id)=>{
-                    return <h1><a href={"/senzor/"+id}/></h1>
-                })	
+                    return (
+                    <div key={id}>
+                        <h1><a href={"/senzor/"+id}>{id}</a></h1>
+                    </div>
+                )})	
             }
             <h1>This will be a home page.</h1>
         </div>
