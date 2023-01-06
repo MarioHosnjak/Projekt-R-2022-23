@@ -57,4 +57,13 @@ public class SensorDataService {
         return new ResponseEntity<String>("Sensor data added", HttpStatus.ACCEPTED);
     }
 
+    public ResponseEntity<String> deleteAllForDate(){
+        try{
+            sdr.deleteAllForDate();
+        }catch(Exception e){
+            return new ResponseEntity<String>("Old data could not be deleted!", HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<String>("Old data successfully deleted", HttpStatus.OK);
+    }
+
 }
