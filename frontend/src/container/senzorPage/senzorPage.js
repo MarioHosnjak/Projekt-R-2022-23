@@ -2,10 +2,25 @@ import React, { useState, useEffect } from 'react';
 
 import "./senzorPage.css"
 import { latestOfId } from "../../utils/axios/backendcalls/senzorEndPoints";
+import {Line} from 'react-chartjs-2';
+import {testData} from './testChartData'
+import { Chart as ChartJS } from "chart.js/auto"; //NE BRISAT, veli da se nigdje ne koristi, ali bez tog ne radi graf
 
 const SenzorPage = () => {
     var [idSenzora, setIdSenzora] = useState("Default");
     const [latestMeasurement, setLatestMeasurement] = useState();
+
+    const [testChartData,setTestData] = useState({
+        labels: testData.map((data) => data.time),
+        datasets: [
+            {
+                label: "Temperature",
+                data: testData.map((data) => data.temp),
+                borderColor: "black",
+                borderWidth: 2,
+              },
+        ]
+    });
 
     idSenzora = window.location.pathname.substring(window.location.pathname.indexOf("senzor/") + 7);
     
@@ -39,6 +54,19 @@ const SenzorPage = () => {
     return (
         <div className="">
             <h1>Sensor id: {idSenzora}</h1>
+            <div style={{width:700}}>
+                <Line 
+                    data={testChartData} 
+                    options={{
+                        scales: {
+                            yAxis: {
+                                min: 0,
+                                max: 50,
+                            }
+                        }
+                    }}
+                />
+            </div>
             {measurementInfo}
         </div>
     );

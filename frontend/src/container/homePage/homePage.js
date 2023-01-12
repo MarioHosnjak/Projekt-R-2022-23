@@ -20,6 +20,7 @@ const HomePage = () => {
     return (
         <div className="">
             {
+                
                 senzorIds.map((id)=>{
                     return (
                     <div key={id}>
@@ -32,10 +33,12 @@ const HomePage = () => {
                 <MapContainer className="homemap" center={[45.80013699500578, 15.97122171454018]} zoom={16} doubleClickZoom={false} scrollWheelZoom={true}
                     whenReady={async (map) => {
                         let i=0;
-                        senzorIds.map((id)=>{
+                        const senids=await getAllSensors();
+                        senids.map((id)=>{
                             const lat=45.8015166376239;
                             const lng=15.971291992802115;
                             const popup='<a href="/senzor/' + id + '">' + id+ '</a>';
+                            
                             L.marker([lat-i*0.0015, lng]).addTo(map.target).bindPopup(popup)
                             .on('mouseover', function (e) {
                                 this.openPopup();
