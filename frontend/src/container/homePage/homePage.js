@@ -5,6 +5,8 @@ import { getAllSensors } from "../../utils/axios/backendcalls/senzorEndPoints";
 import { MapContainer, TileLayer } from 'react-leaflet'
 import L from "leaflet";
 
+import logo from '../../assets/images/FER_logo.png';
+
 const HomePage = () => {
     const [senzorIds, setSenzorIds] = useState([]);
 
@@ -18,17 +20,19 @@ const HomePage = () => {
     }, []);
     //const senzorIds=await getAllSensors();
     return (
-        <div className="">
-            {
-                
-                senzorIds.map((id)=>{
-                    return (
-                    <div key={id}>
-                        <h1><a href={"/senzor/"+id}>{id}</a></h1>
-                    </div>
-                )})	
-            }
-            <h1>This will be a home page.</h1>
+        <div className="home-container">
+            <div className='logo-container' ><img src={logo} alt="Logo" /></div>
+            {<div className='sensor-div'>
+                <h1>Aktivni senzori:</h1>
+                {
+                    senzorIds.map((id)=>{
+                        return (
+                        <div key={id}>
+                            <h2><a href={"/senzor/"+id}>{id}</a></h2>
+                        </div>
+                    )})	
+                }
+            </div>}
             <div className="home-map-div">
                 <MapContainer className="homemap" center={[45.80013699500578, 15.97122171454018]} zoom={16} doubleClickZoom={false} scrollWheelZoom={true}
                     whenReady={async (map) => {

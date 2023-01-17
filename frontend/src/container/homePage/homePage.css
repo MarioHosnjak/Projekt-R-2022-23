@@ -1,11 +1,38 @@
+html, body {
+  min-height: 100%;
+}
 .home-map-div{
     z-index:-1;
     position:absolute;
-    top: 25%;
-    right: 70%;
-    width: 100px;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 100px;
   }
 .home-map-div .leaflet-container{
-    width: 50vw;
+    width: 100vw;
     height: 50vh;
+}
+.sensor-div{
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100vw;
+  height: 50vh;
+  background-color:lightgray;
+}
+.logo-container{
+  position:fixed;
+  z-index: 1;
+  left: 0px;
+  top: 0px;
+}
+.Logo {
+  background-image: url(../../assets/images/FER_logo.png);
+}
+img {
+  width: 150px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
