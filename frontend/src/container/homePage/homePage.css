@@ -4,14 +4,16 @@ html, body {
 .home-map-div{
     z-index:-1;
     position:absolute;
-    top: 50%;
+    /* top: 50%; */
     right: 0;
     left: 0;
-    height: 100px;
+    bottom: 0;
+    /* height: 100px; */
+   height: 100%;
   }
 .home-map-div .leaflet-container{
     width: 100vw;
-    height: 50vh;
+    height: 100%;
 }
 .sensor-div{
   position:absolute;
@@ -19,7 +21,7 @@ html, body {
   left: 0px;
   right: 0px;
   width: 100vw;
-  height: 50vh;
+  /* height: 50vh; */
   background-color:lightgray;
 }
 .logo-container{
