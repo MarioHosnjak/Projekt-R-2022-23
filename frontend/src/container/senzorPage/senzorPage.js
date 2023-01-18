@@ -35,6 +35,7 @@ const SenzorPage = () => {
             });
             allOfId(idSenzora).then((res) => {
                 console.log(res);
+                res = res.reverse();
                 setAllMeasurements(res);
             }).catch((err) => {
                 console.log(err);
