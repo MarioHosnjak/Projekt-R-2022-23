@@ -1,1 +1,0 @@
-Tko god radi s Gatewayem, u main.py pod wlan.connect (negdje oko 30. reda) promijenit ssid i password na neki svoj
