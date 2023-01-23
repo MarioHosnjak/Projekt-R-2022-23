@@ -6,3 +6,5 @@ Sudjelovali:
 * Damjan-Bartol Benjak
 * Andrej Cirkveni
 * Mario Hošnjak
+
+Poveznica na deployanu stranicu: http://projektsensors.ddns.net/
