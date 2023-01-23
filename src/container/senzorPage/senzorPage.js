@@ -51,7 +51,7 @@ const SenzorPage = () => {
                 measurementData.push(
                 <div key={key}>
                     <h2>Latest {key}: {latestMeasurement[key]}</h2>
-                    <div style={{width:700}}>
+                    <div style={{width:"50vw"}}>
                             <Line 
                                 data={{
                                     labels: allMeasurements.map((data) => data.time),
@@ -87,20 +87,22 @@ const SenzorPage = () => {
 
 
     return (
-        <div className="">
-            <h1>Sensor id: {idSenzora}</h1>
-            <div style={{width:700}}>
-                <Line 
-                    data={testChartData} 
-                    options={{
-                        scales: {
-                            yAxis: {
-                                min: 0,
-                                max: 50,
+        <div className="centeredContainer">
+            <div className="centeredContainer">
+                <h1>Sensor id: {idSenzora}</h1>
+                <div style={{width:"50vw"}}>
+                    <Line 
+                        data={testChartData} 
+                        options={{
+                            scales: {
+                                yAxis: {
+                                    min: 0,
+                                    max: 50,
+                                }
                             }
-                        }
-                    }}
-                />
+                        }}
+                    />
+                </div>
             </div>
             {measurementInfo}
         </div>
