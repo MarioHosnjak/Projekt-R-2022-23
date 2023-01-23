@@ -1,14 +1,14 @@
 import axios from "../apiClient";
 
 export const getAllSensors = async () => {
-    const response = await axios.get("http://projektr.hopto.org/sensordata/ids");
+    const response = await axios.get("http://projektsensors.ddns.net/sensordata/ids");
     return response.data;
 }
 export const latestOfId = async (id) => {
-    const response = await axios.post(`http://projektr.hopto.org/sensordata/findlatest`,{"sensorId":id});
+    const response = await axios.post(`http://projektsensors.ddns.net/sensordata/findlatest`,{"sensorId":id});
     return response.data;
 }
 export const allOfId = async (id) => {
-    const response = await axios.post(`http://projektr.hopto.org/sensordata/all`,{"sensorId":id});
+    const response = await axios.post(`http://projektsensors.ddns.net/sensordata/all`,{"sensorId":id});
     return response.data;
 }
