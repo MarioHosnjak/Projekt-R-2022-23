@@ -51,7 +51,7 @@ const SenzorPage = () => {
                 measurementData.push(
                 <div key={key}>
                     <h2>Latest {key}: {latestMeasurement[key]}</h2>
-                    <div style={{width:"50vw"}}>
+                    <div className="graphDiv">
                             <Line 
                                 data={{
                                     labels: allMeasurements.map((data) => data.time),
@@ -88,9 +88,12 @@ const SenzorPage = () => {
 
     return (
         <div className="centeredContainer">
+            <div className="backBtnDiv">
+                <button className="backBtn" onClick={event =>  window.location.href='/'}><strong>Return</strong></button>
+            </div>
             <div className="centeredContainer">
                 <h1>Sensor id: {idSenzora}</h1>
-                <div style={{width:"50vw"}}>
+                <div className="graphDiv">
                     <Line 
                         data={testChartData} 
                         options={{

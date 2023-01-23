@@ -4,3 +4,39 @@
     flex-direction: column;
     width: 100%;
 }
+
+.graphDiv {
+    width: 50vw;
+}
+
+.backBtnDiv {
+    display: block;
+    position: fixed;
+    /* z-index: 3; */
+    right: 0px;
+    top: 0px;
+    padding: 3vw;
+    width: 5vw;
+    height: 3vw;
+}
+
+.backBtn {
+    width: 100%;
+    height: 100%;
+    background-color: lightcoral;
+    border-radius: 10px;
+}
+
+.backBtn:hover {
+    background-color: indianred;
+}
+
+@media screen and (max-width: 600px) {
+    .backBtnDiv {
+        height: 5vh;
+        width: 10vh;
+    }
+    .graphDiv {
+        width: 95vw;
+    }
+}
