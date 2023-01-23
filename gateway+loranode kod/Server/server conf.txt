@@ -1,0 +1,20 @@
+server{
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/projektsensors.ddns.net;
+        index index.html;
+
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
+
+        location /sensordata {
+                proxy_pass http://localhost:8080/sensordata;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+        }
+}
