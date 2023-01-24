@@ -2,9 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import HomePageWrapper from './components/wrappers/homePageWrapper';
 import NotFound from './container/notFound/notFound';
-import SenzorPageWrapper from './components/wrappers/senzorPageWrapper';
+import HomePage from './container/homePage/homePage';
+import SenzorPage from './container/senzorPage/senzorPage';
 
 function App() {
   return (
@@ -12,11 +12,11 @@ function App() {
       <Routes>
         <Route
           path={"/"}
-          element={<HomePageWrapper/>}
+          element={<HomePage/>}
         />
         <Route
           path={"/senzor/:id"}
-          element={<SenzorPageWrapper/>}
+          element={<SenzorPage/>}
         />
         <Route
           path={"*"}
