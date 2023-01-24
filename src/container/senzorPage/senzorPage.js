@@ -10,6 +10,8 @@ const SenzorPage = () => {
     var [idSenzora, setIdSenzora] = useState("Default");
     const [latestMeasurement, setLatestMeasurement] = useState();
     const [allMeasurements, setAllMeasurements] = useState();
+    var [NumMeasurements, setNumMeasurements] = useState("5");
+    var[lastNoOfData, setlastNoOfData] = useState();
 
     const [testChartData,setTestData] = useState({
         labels: testData.map((data) => data.time),
@@ -24,19 +26,29 @@ const SenzorPage = () => {
     });
 
     idSenzora = window.location.pathname.substring(window.location.pathname.indexOf("senzor/") + 7);
+
+
+
+    function handleRadio(event){
+        const n=event.target.value;
+        setNumMeasurements(event.target.value);
+        console.log(allMeasurements.slice(allMeasurements.length-n,allMeasurements.length));
+        setlastNoOfData(allMeasurements.slice(allMeasurements.length-n,allMeasurements.length))
+    };
     
     useEffect(() => {
+        console.log("NumMeasurements")
+        console.log(NumMeasurements)
         if(idSenzora !== "Default"){
             latestOfId(idSenzora).then((res) => {
-                console.log(res);
                 setLatestMeasurement(res);
             }).catch((err) => {
                 console.log(err);
             });
             allOfId(idSenzora).then((res) => {
-                console.log(res);
                 res = res.reverse();
                 setAllMeasurements(res);
+                setlastNoOfData=res.slice(res.length-NumMeasurements,res.length);
             }).catch((err) => {
                 console.log(err);
             });
@@ -45,7 +57,7 @@ const SenzorPage = () => {
     }, []);
 
     let measurementData=[];
-    if(latestMeasurement && allMeasurements){
+    if(latestMeasurement && allMeasurements && lastNoOfData){
         for(var key in latestMeasurement){
             if(!["id","location","sensorId","time"].includes(key)){
                 measurementData.push(
@@ -54,10 +66,10 @@ const SenzorPage = () => {
                     <div className="graphDiv">
                             <Line 
                                 data={{
-                                    labels: allMeasurements.map((data) => data.time),
+                                    labels: lastNoOfData.map((data) => data.time),
                                     datasets: [{
                                         label: key,
-                                        data: allMeasurements.map((data) => data[key]),
+                                        data: lastNoOfData.map((data) => data[key]),
                                         borderColor: "black",
                                         borderWidth: 2,
                                     }]
@@ -80,6 +92,9 @@ const SenzorPage = () => {
                             <h2>Time: {latestMeasurement["time"]}</h2>
                             <h2>Location: {latestMeasurement["location"]}</h2>
                             <p>-----------------------------</p>
+                            <p>Number of measurements</p>
+                            <label><input name="rb" type="radio" value="5" onChange={handleRadio} checked={NumMeasurements==="5"}/>5</label>
+                            <label><input name="rb" type="radio" value="3" onChange={handleRadio} checked={NumMeasurements==="3"}/>3</label>
                             {measurementData}
                             </div>
     }
