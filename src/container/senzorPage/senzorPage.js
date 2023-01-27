@@ -12,6 +12,15 @@ const SenzorPage = () => {
     const [allMeasurements, setAllMeasurements] = useState();
     var [NumMeasurements, setNumMeasurements] = useState("5");
     var[lastNoOfData, setlastNoOfData] = useState();
+    var maxSuggested = {
+        "humidity": 100,
+        "pressure": 150,
+        "illuminance": 15,
+        "temperature": 40,
+        "uva":15,
+        "uvb":15,
+        "uvindex":15,
+      };
 
     const [testChartData,setTestData] = useState({
         labels: testData.map((data) => data.time),
@@ -32,13 +41,10 @@ const SenzorPage = () => {
     function handleRadio(event){
         const n=event.target.value;
         setNumMeasurements(event.target.value);
-        console.log(allMeasurements.slice(allMeasurements.length-n,allMeasurements.length));
         setlastNoOfData(allMeasurements.slice(allMeasurements.length-n,allMeasurements.length))
     };
     
     useEffect(() => {
-        console.log("NumMeasurements")
-        console.log(NumMeasurements)
         if(idSenzora !== "Default"){
             latestOfId(idSenzora).then((res) => {
                 setLatestMeasurement(res);
@@ -57,7 +63,11 @@ const SenzorPage = () => {
     }, []);
 
     let measurementData=[];
-    if(latestMeasurement && allMeasurements && lastNoOfData){
+    if(latestMeasurement && allMeasurements){
+        var chartdata=allMeasurements;
+        if(lastNoOfData){
+            chartdata=lastNoOfData;
+        }
         for(var key in latestMeasurement){
             if(!["id","location","sensorId","time"].includes(key)){
                 measurementData.push(
@@ -66,13 +76,21 @@ const SenzorPage = () => {
                     <div className="graphDiv">
                             <Line 
                                 data={{
-                                    labels: lastNoOfData.map((data) => data.time),
+                                    labels: chartdata.map((data) => data.time),
                                     datasets: [{
                                         label: key,
-                                        data: lastNoOfData.map((data) => data[key]),
+                                        data: chartdata.map((data) => data[key]),
                                         borderColor: "black",
                                         borderWidth: 2,
                                     }]
+                                }}
+                                options={{
+                                    scales: {
+                                        y: {
+                                            suggestedMin: key==="pressure"?90:0,
+                                            suggestedMax: maxSuggested[key],
+                                        }
+                                    }
                                 }}
                             />
                         </div>
@@ -113,9 +131,9 @@ const SenzorPage = () => {
                         data={testChartData} 
                         options={{
                             scales: {
-                                yAxis: {
-                                    min: 0,
-                                    max: 50,
+                                y: {
+                                    suggestedMin: 0,
+                                    suggestedMax: 30,
                                 }
                             }
                         }}
