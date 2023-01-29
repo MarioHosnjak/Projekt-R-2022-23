@@ -10,8 +10,14 @@ String devAddr;
 String nwkSKey;
 String appSKey;
 
+int pirPin = 5;
+int prevStat = LOW;
+int val = 0;
+int counter = 0;
+
 void setup() {
 
+  pinMode(pirPin, INPUT);
   Serial.begin(115200);
   while (!Serial);
   if (!modem.begin(EU868)) {
@@ -34,8 +40,8 @@ void setup() {
   int connected;
   if (mode == 1) {
 
-    appEui = "2462ABFFFEB565E8";
-    appKey = "E29900A47EEC4BFC31AA499D3CE0614C";
+    appEui = "2462ABFFFEB565E8"; //ovo promijenit na eui od svog gatewaya
+    appKey = "E29900A47EEC4BFC31AA499D3CE0614C"; //ovo promijenit na svoj appkey sa things networka
     appKey.trim();
     appEui.trim();
     connected = modem.joinOTAA(appEui, appKey);
@@ -58,14 +64,32 @@ void setup() {
   }
 
   rtc.start();  
+  Serial.println("Setting up motion sensor...");
+  delay(10000);
+  Serial.println("Sensor initialized");
 }
 
 void loop() {
 
   DateTime now = rtc.now();
 
-  if(now.unixtime() % 10 == 5){
-    float temperature = ENV.readTemperature();
+  val = digitalRead(pirPin);
+
+  if(val == HIGH){
+    if(prevStat == LOW){
+      prevStat = HIGH;
+      counter++;
+      Serial.println("Motion detected!");
+    }
+  }else{
+    if(prevStat == HIGH){
+      prevStat = LOW;
+      Serial.println("no motion");
+    }
+  }
+
+  if(now.unixtime() % 60 == 5){
+  float temperature = ENV.readTemperature();
   float humidity    = ENV.readHumidity();
   float pressure    = ENV.readPressure();
   float illuminance = ENV.readIlluminance();
@@ -106,6 +130,11 @@ void loop() {
   Serial.print("UV Index    = ");
   Serial.println(uvIndex);
 
+  Serial.print("Motions detected    = ");
+  Serial.println(counter);
+
+  counter = 0;
+
   int err;
   modem.setPort(3);
   modem.beginPacket();
@@ -123,7 +152,7 @@ void loop() {
     Serial.println("Error sending message :(");
   }
   Serial.println();
+  delay(1000);
   }
 
-  delay(1000);
 }
