@@ -9,6 +9,9 @@ String appKey;
 String devAddr;
 String nwkSKey;
 String appSKey;
+bool my_status;
+int PM25;
+int PM10;
 
 int pirPin = 5;
 int prevStat = LOW;
@@ -18,24 +21,23 @@ int counter = 0;
 void setup() {
 
   pinMode(pirPin, INPUT);
-  Serial.begin(115200);
-  while (!Serial);
+  Serial1.begin(9600);
+  delay(5000);
+  //while (!Serial);
   if (!modem.begin(EU868)) {
-    Serial.println("Failed to start module");
     while (1) {}
   };
 
   if (!ENV.begin()) {
-    Serial.println("Failed to initialize MKR ENV shield!");
     while (1);
   }
 
-  int mode = 0;
-  while (mode != 1) {
-    Serial.println("Press 1 to connect");
-    while (!Serial.available());
-    mode = Serial.readStringUntil('\n').toInt();
-  }
+  int mode = 1;
+  // while (mode != 1) {
+  //   Serial.println("Press 1 to connect");
+  //   while (!Serial.available());
+  //   mode = Serial.readStringUntil('\n').toInt();
+  // }
 
   int connected;
   if (mode == 1) {
@@ -48,25 +50,31 @@ void setup() {
   }
 
   if (!connected) {
-    Serial.println("Something went wrong; are you indoor? Move near a window and retry");
     while (1) {}
   }
 
+  my_status = stop_autosend(); 
+  // Serial.print("Stop autosend status is ");
+  // Serial.println(my_status, BIN);
+  // Serial.println(" ");
+  delay(500);
+  
+  my_status = start_measurement(); 
+  // Serial.print("Start measurement status is ");
+  // Serial.println(my_status, BIN);
+  // Serial.println(" ");
+  delay(500);
+
   if (! rtc.begin()) {
-    Serial.println("Couldn't find RTC");
-    Serial.flush();
     while (1) delay(10);
   }
 
   if (! rtc.initialized() || rtc.lostPower()) {
-    Serial.println("RTC is NOT initialized, let's set the time!");
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
 
   rtc.start();  
-  Serial.println("Setting up motion sensor...");
-  delay(10000);
-  Serial.println("Sensor initialized");
+  delay(5000);
 }
 
 void loop() {
@@ -79,59 +87,51 @@ void loop() {
     if(prevStat == LOW){
       prevStat = HIGH;
       counter++;
-      Serial.println("Motion detected!");
     }
   }else{
     if(prevStat == HIGH){
       prevStat = LOW;
-      Serial.println("no motion");
     }
   }
 
-  if(now.unixtime() % 60 == 5){
+  if(now.unixtime() % 15 == 5){
   float temperature = ENV.readTemperature();
   float humidity    = ENV.readHumidity();
   float pressure    = ENV.readPressure();
-  float illuminance = ENV.readIlluminance();
-  float uva         = ENV.readUVA();
-  float uvb         = ENV.readUVB();
-  float uvIndex     = ENV.readUVIndex(); 
+
+  my_status = read_measurement(); 
+  // Serial.print("Stop autosend status is ");
+  // Serial.println(my_status, BIN);
+  // Serial.println(" ");
+  delay(500);
 
   int16_t temp = (int16_t)(temperature * 100);
   int16_t hum = (int16_t)(humidity * 100);
   int16_t pres = (int16_t)(pressure * 100);
-  int16_t ill = (int16_t)(illuminance * 100);
-  int16_t a = (int16_t)(uva * 100);
-  int16_t b = (int16_t)(uvb * 100);
-  int16_t index = (int16_t)(uvIndex * 100);
+  int16_t pm25 = (int16_t) PM25;
+  int16_t pm10 = (int16_t) PM10;
+  int16_t cnt = (int16_t) counter;
 
-  Serial.print("Temperature = ");
-  Serial.print(temperature);
-  Serial.println(" °C");
+  // Serial.print("Temperature = ");
+  // Serial.print(temperature);
+  // Serial.println(" °C");
 
-  Serial.print("Humidity    = ");
-  Serial.print(humidity);
-  Serial.println(" %");
+  // Serial.print("Humidity    = ");
+  // Serial.print(humidity);
+  // Serial.println(" %");
 
-  Serial.print("Pressure    = ");
-  Serial.print(pressure);
-  Serial.println(" kPa");
+  // Serial.print("Pressure    = ");
+  // Serial.print(pressure);
+  // Serial.println(" kPa");
 
-  Serial.print("Illuminance = ");
-  Serial.print(illuminance);
-  Serial.println(" lx");
+  // Serial.print("Motions detected    = ");
+  // Serial.println(counter);
 
-  Serial.print("UVA         = ");
-  Serial.println(uva);
+  // Serial.print("PM2.5 concentration    = ");
+  // Serial.println(pm25);
 
-  Serial.print("UVB         = ");
-  Serial.println(uvb);
-
-  Serial.print("UV Index    = ");
-  Serial.println(uvIndex);
-
-  Serial.print("Motions detected    = ");
-  Serial.println(counter);
+  // Serial.print("PM10 concentration    = ");
+  // Serial.println(pm10);
 
   counter = 0;
 
@@ -141,18 +141,122 @@ void loop() {
   modem.write(temp);
   modem.write(hum);
   modem.write(pres);
-  modem.write(ill);
-  modem.write(a);
-  modem.write(b);
-  modem.write(index);
+  modem.write(cnt);
+  modem.write(pm25);
+  modem.write(pm10);
   err = modem.endPacket(true);
   if (err > 0) {
-    Serial.println("Message sent correctly!");
   } else {
-    Serial.println("Error sending message :(");
   }
-  Serial.println();
   delay(1000);
   }
 
 }
+
+bool start_measurement(void)
+{
+  byte start_measurement[] = {0x68, 0x01, 0x01, 0x96 };
+  Serial1.write(start_measurement, sizeof(start_measurement));
+  while(Serial1.available() < 2);
+  char read1 = Serial1.read();
+  char read2 = Serial1.read();
+  if ((read1 == 0xA5) && (read2 == 0xA5)){
+    return 1;
+  }
+  else if ((read1 == 0x96) && (read2 == 0x96))
+  {
+    return 0;
+  }
+  else return 0;
+}
+
+bool stop_measurement(void)
+{
+  byte stop_measurement[] = {0x68, 0x01, 0x02, 0x95 };
+  Serial1.write(stop_measurement, sizeof(stop_measurement));
+  while(Serial1.available() < 2);
+  char read1 = Serial1.read();
+  char read2 = Serial1.read();
+  if ((read1 == 0xA5) && (read2 == 0xA5)){
+    return 1;
+  }
+  else if ((read1 == 0x96) && (read2 == 0x96))
+  {
+    return 0;
+  }
+  else return 0;
+}
+
+bool read_measurement (void)
+{
+  byte read_particle[] = {0x68, 0x01, 0x04, 0x93 };
+  Serial1.write(read_particle, sizeof(read_particle));
+  while(Serial1.available() < 1);
+  byte HEAD = Serial1.read();
+  while(Serial1.available() < 1);
+  byte LEN = Serial1.read();
+  
+  if ((HEAD == 0x96) && (LEN == 0x96)){
+    return 0;
+  }
+  else if ((HEAD == 0x40) && (LEN == 0x05))
+  {
+    while(Serial1.available() < 1);
+    byte COMD = Serial1.read();
+    while(Serial1.available() < 1);
+    byte DF1 = Serial1.read(); 
+    while(Serial1.available() < 1);
+    byte DF2 = Serial1.read();     
+    while(Serial1.available() < 1);
+    byte DF3 = Serial1.read();   
+    while(Serial1.available() < 1);
+    byte DF4 = Serial1.read();     
+    while(Serial1.available() < 1);
+    byte CS = Serial1.read();      
+    // Now we shall verify the checksum
+    if (((0x10000 - HEAD - LEN - COMD - DF1 - DF2 - DF3 - DF4) % 0xFF) != CS){
+      return 0;
+    }
+    else
+    {
+      PM25 = DF1 * 256 + DF2;
+      PM10 = DF3 * 256 + DF4;
+      return 1;
+    }
+  }
+}
+
+bool stop_autosend(void)
+{
+  byte stop_autosend[] = {0x68, 0x01, 0x20, 0x77 };
+  Serial1.write(stop_autosend, sizeof(stop_autosend));
+  while(Serial1.available() < 2);
+  char read1 = Serial1.read();
+  char read2 = Serial1.read();
+  if ((read1 == 0xA5) && (read2 == 0xA5)){
+    return 1;
+  }
+  else if ((read1 == 0x96) && (read2 == 0x96))
+  {
+    return 0;
+  }
+  else return 0;
+}
+
+bool start_autosend(void)
+{
+  byte start_autosend[] = {0x68, 0x01, 0x40, 0x57 };
+  Serial1.write(start_autosend, sizeof(start_autosend));
+  while(Serial1.available() < 2);
+  char read1 = Serial1.read();
+  char read2 = Serial1.read();
+  if ((read1 == 0xA5) && (read2 == 0xA5)){
+    return 1;
+  }
+  else if ((read1 == 0x96) && (read2 == 0x96))
+  {
+    return 0;
+  }
+  else return 0;
+}
+

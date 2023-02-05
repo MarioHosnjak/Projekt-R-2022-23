@@ -2,16 +2,15 @@
   "end_device_ids": {
     "device_id": "eui-a8610a32373e7208"
   },
-  "received_at": "2022-12-25T17:45:54.552653369Z",
+  "received_at": "2023-02-05T22:56:03.983491634Z",
   "uplink_message": {
     "decoded_payload": {
-      "Humidity": 77.08,
-      "Illuminance": 1.93,
-      "Pressure": 101.02,
-      "Temperature": 19.84,
-      "UVA": 6,
-      "UVB": 0,
-      "UVIndex": 0
+      "Humidity": 48.64,
+      "Motions": 0,
+      "PM10": 21,
+      "PM25": 20,
+      "Pressure": 102.39,
+      "Temperature": 20.92
     }
   }
 }
