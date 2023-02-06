@@ -26,9 +26,6 @@ public class Measurement {
     @Column(name = "humidity")
     private Double humidity;
 
-    @Column(name = "illuminance")
-    private Double illuminance;
-
     @Column(name="location", length = 40)
     private String location;
 
@@ -44,25 +41,84 @@ public class Measurement {
     @Column(name = "time", nullable = false)
     private LocalDateTime time;
 
-    @Column(name = "uva")
-    private Double uva;
+    @Column(name = "pm10")
+    private int pm10;
 
-    @Column(name = "uvb")
-    private Double uvb;
+    @Column(name = "pm25")
+    private int pm25;
 
-    @Column(name = "uvindex")
-    private Double uvindex;
+    @Column(name = "motions")
+    private int motions;
 
-    public Measurement(Double humidity, Double illuminance, String location, Double pressure, String sensorId, Double temperature, LocalDateTime time, Double uva, Double uvb, Double uvindex) {
+    public Double getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(Double humidity) {
         this.humidity = humidity;
-        this.illuminance = illuminance;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Double getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(Double pressure) {
         this.pressure = pressure;
+    }
+
+    public String getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(String sensorId) {
         this.sensorId = sensorId;
+    }
+
+    public Double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
         this.time = time;
-        this.uva = uva;
-        this.uvb = uvb;
-        this.uvindex = uvindex;
+    }
+
+    public int getPm10() {
+        return pm10;
+    }
+
+    public void setPm10(int pm10) {
+        this.pm10 = pm10;
+    }
+
+    public int getPm25() {
+        return pm25;
+    }
+
+    public void setPm25(int pm25) {
+        this.pm25 = pm25;
+    }
+
+    public int getMotions() {
+        return motions;
+    }
+
+    public void setMotions(int motions) {
+        this.motions = motions;
     }
 }

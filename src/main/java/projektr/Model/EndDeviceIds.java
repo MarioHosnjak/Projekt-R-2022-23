@@ -1,7 +1,7 @@
 
 package projektr.Model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -21,7 +21,7 @@ public class EndDeviceIds {
     @JsonProperty("device_id")
     private String deviceId;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("device_id")
     public String getDeviceId() {

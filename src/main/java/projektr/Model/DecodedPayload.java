@@ -1,7 +1,7 @@
 
 package projektr.Model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -14,32 +14,29 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "Humidity",
-    "Illuminance",
+    "Motions",
+    "PM10",
+    "PM25",
     "Pressure",
-    "Temperature",
-    "UVA",
-    "UVB",
-    "UVIndex"
+    "Temperature"
 })
 @Generated("jsonschema2pojo")
 public class DecodedPayload {
 
     @JsonProperty("Humidity")
     private Double humidity;
-    @JsonProperty("Illuminance")
-    private Double illuminance;
+    @JsonProperty("Motions")
+    private Integer motions;
+    @JsonProperty("PM10")
+    private Integer pm10;
+    @JsonProperty("PM25")
+    private Integer pm25;
     @JsonProperty("Pressure")
     private Double pressure;
     @JsonProperty("Temperature")
     private Double temperature;
-    @JsonProperty("UVA")
-    private Double uva;
-    @JsonProperty("UVB")
-    private Double uvb;
-    @JsonProperty("UVIndex")
-    private Double uVIndex;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("Humidity")
     public Double getHumidity() {
@@ -51,14 +48,34 @@ public class DecodedPayload {
         this.humidity = humidity;
     }
 
-    @JsonProperty("Illuminance")
-    public Double getIlluminance() {
-        return illuminance;
+    @JsonProperty("Motions")
+    public Integer getMotions() {
+        return motions;
     }
 
-    @JsonProperty("Illuminance")
-    public void setIlluminance(Double illuminance) {
-        this.illuminance = illuminance;
+    @JsonProperty("Motions")
+    public void setMotions(Integer motions) {
+        this.motions = motions;
+    }
+
+    @JsonProperty("PM10")
+    public Integer getPm10() {
+        return pm10;
+    }
+
+    @JsonProperty("PM10")
+    public void setPm10(Integer pm10) {
+        this.pm10 = pm10;
+    }
+
+    @JsonProperty("PM25")
+    public Integer getPm25() {
+        return pm25;
+    }
+
+    @JsonProperty("PM25")
+    public void setPm25(Integer pm25) {
+        this.pm25 = pm25;
     }
 
     @JsonProperty("Pressure")
@@ -79,36 +96,6 @@ public class DecodedPayload {
     @JsonProperty("Temperature")
     public void setTemperature(Double temperature) {
         this.temperature = temperature;
-    }
-
-    @JsonProperty("UVA")
-    public Double getUva() {
-        return uva;
-    }
-
-    @JsonProperty("UVA")
-    public void setUva(Double uva) {
-        this.uva = uva;
-    }
-
-    @JsonProperty("UVB")
-    public Double getUvb() {
-        return uvb;
-    }
-
-    @JsonProperty("UVB")
-    public void setUvb(Double uvb) {
-        this.uvb = uvb;
-    }
-
-    @JsonProperty("UVIndex")
-    public Double getUVIndex() {
-        return uVIndex;
-    }
-
-    @JsonProperty("UVIndex")
-    public void setUVIndex(Double uVIndex) {
-        this.uVIndex = uVIndex;
     }
 
     @JsonAnyGetter

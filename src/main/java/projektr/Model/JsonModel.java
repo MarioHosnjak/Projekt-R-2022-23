@@ -1,7 +1,7 @@
 
 package projektr.Model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -27,7 +27,7 @@ public class JsonModel {
     @JsonProperty("uplink_message")
     private UplinkMessage uplinkMessage;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("end_device_ids")
     public EndDeviceIds getEndDeviceIds() {

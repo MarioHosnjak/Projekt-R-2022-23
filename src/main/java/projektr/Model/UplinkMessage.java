@@ -1,7 +1,7 @@
 
 package projektr.Model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -21,7 +21,7 @@ public class UplinkMessage {
     @JsonProperty("decoded_payload")
     private DecodedPayload decodedPayload;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("decoded_payload")
     public DecodedPayload getDecodedPayload() {

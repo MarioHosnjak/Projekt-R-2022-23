@@ -48,12 +48,11 @@ public class SensorDataController {
     @CrossOrigin(origins = "*")
     @PostMapping("/add")
     public ResponseEntity<String> addData(@RequestBody JsonModel model){
-        //ovo radi ali nek zasad ostane zakomentirano dok ne deployamo
-//        if(sds.deleteAllForDate().getStatusCode().is2xxSuccessful()){
-//            System.out.println("Old data successfully deleted");
-//        }else{
-//            System.out.println("Old data could not be deleted!");
-//        }
+        if(sds.deleteAllForDate().getStatusCode().is2xxSuccessful()){
+            System.out.println("Old data successfully deleted");
+        }else{
+            System.out.println("Old data could not be deleted!");
+        }
         return sds.addData(model);
     }
 }
