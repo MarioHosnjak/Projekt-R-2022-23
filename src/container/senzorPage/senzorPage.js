@@ -147,19 +147,6 @@ const SenzorPage = () => {
             </div>
             <div className="centeredContainer">
                 <h1>Sensor id: {idSenzora}</h1>
-                <div className="graphDiv">
-                    <Line 
-                        data={testChartData} 
-                        options={{
-                            scales: {
-                                y: {
-                                    suggestedMin: 0,
-                                    suggestedMax: 30,
-                                }
-                            }
-                        }}
-                    />
-                </div>
             </div>
             {measurementInfo}
         </div>
