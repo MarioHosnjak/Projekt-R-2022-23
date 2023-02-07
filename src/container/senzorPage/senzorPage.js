@@ -10,18 +10,32 @@ const SenzorPage = () => {
     var [idSenzora, setIdSenzora] = useState("Default");
     const [latestMeasurement, setLatestMeasurement] = useState();
     const [allMeasurements, setAllMeasurements] = useState();
-    var [NumMeasurements, setNumMeasurements] = useState("5");
+    var [NumMeasurements, setNumMeasurements] = useState("all");
     var[lastNoOfData, setlastNoOfData] = useState();
     var maxSuggested = {
         "humidity": 100,
         "pressure": 150,
-        "illuminance": 15,
         "temperature": 40,
-        "uva":15,
-        "uvb":15,
-        "uvindex":15,
+        "pm25": 100,
+        "pm10": 100,
+        "motions": 100,
       };
-
+    var minSuggested = {
+        "humidity": 0,
+        "pressure": 90,
+        "temperature": 0,
+        "pm25": 0,
+        "pm10": 0,
+        "motions": 0,
+      };  
+    var measUnits={
+        "humidity": "%",
+        "pressure": "kPa",
+        "temperature": "°C",
+        "pm25": "µg/m³",
+        "pm10": "µg/m³",
+        "motions": "",
+    }
     const [testChartData,setTestData] = useState({
         labels: testData.map((data) => data.time),
         datasets: [
@@ -39,14 +53,23 @@ const SenzorPage = () => {
 
 
     function handleRadio(event){
-        const n=event.target.value;
+        const n=allMeasurements.length;
+        if(event.target.value==="half"){
+            if(n%2===0){
+                setlastNoOfData(allMeasurements.slice(allMeasurements.length-n/2,allMeasurements.length))
+            }else{
+                setlastNoOfData(allMeasurements.slice(allMeasurements.length-(n+1)/2,allMeasurements.length))
+            }
+        }else if(event.target.value==="all"){
+            setlastNoOfData(allMeasurements);
+        }
         setNumMeasurements(event.target.value);
-        setlastNoOfData(allMeasurements.slice(allMeasurements.length-n,allMeasurements.length))
     };
     
     useEffect(() => {
         if(idSenzora !== "Default"){
             latestOfId(idSenzora).then((res) => {
+                console.log(res);
                 setLatestMeasurement(res);
             }).catch((err) => {
                 console.log(err);
@@ -72,7 +95,7 @@ const SenzorPage = () => {
             if(!["id","location","sensorId","time"].includes(key)){
                 measurementData.push(
                 <div key={key}>
-                    <h2>Latest {key}: {latestMeasurement[key]}</h2>
+                    <h2>Latest {key==="pm25"?"pm2.5":key}:  {latestMeasurement[key]}{measUnits[key]}</h2>
                     <div className="graphDiv">
                             <Line 
                                 data={{
@@ -87,7 +110,7 @@ const SenzorPage = () => {
                                 options={{
                                     scales: {
                                         y: {
-                                            suggestedMin: key==="pressure"?90:0,
+                                            suggestedMin: minSuggested[key],
                                             suggestedMax: maxSuggested[key],
                                         }
                                     }
@@ -111,8 +134,8 @@ const SenzorPage = () => {
                             <h2>Location: {latestMeasurement["location"]}</h2>
                             <p>-----------------------------</p>
                             <p>Number of measurements</p>
-                            <label><input name="rb" type="radio" value="5" onChange={handleRadio} checked={NumMeasurements==="5"}/>5</label>
-                            <label><input name="rb" type="radio" value="3" onChange={handleRadio} checked={NumMeasurements==="3"}/>3</label>
+                            <label><input name="rb" type="radio" value="all" onChange={handleRadio} checked={NumMeasurements==="all"}/>all</label>
+                            <label><input name="rb" type="radio" value="half" onChange={handleRadio} checked={NumMeasurements==="half"}/>half</label>
                             {measurementData}
                             </div>
     }
