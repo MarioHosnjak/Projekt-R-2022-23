@@ -64,6 +64,15 @@ const SenzorPage = () => {
             setlastNoOfData(allMeasurements);
         }
         setNumMeasurements(event.target.value);
+        /* kad cemo imat za odabrat vise mjerenja
+        const m=event.target.value;
+        if(n<m){
+            setlastNoOfData(allMeasurements);
+        }else{
+            setlastNoOfData(allMeasurements.slice(allMeasurements.length-m,allMeasurements.length))
+        }
+        setNumMeasurements(event.target.value);
+        */
     };
     
     useEffect(() => {
@@ -136,6 +145,11 @@ const SenzorPage = () => {
                             <p>Number of measurements</p>
                             <label><input name="rb" type="radio" value="all" onChange={handleRadio} checked={NumMeasurements==="all"}/>all</label>
                             <label><input name="rb" type="radio" value="half" onChange={handleRadio} checked={NumMeasurements==="half"}/>half</label>
+                            {/*
+                            <label><input name="rb" type="radio" value="30" onChange={handleRadio} checked={NumMeasurements==="30"}/>30</label>
+                            <label><input name="rb" type="radio" value="20" onChange={handleRadio} checked={NumMeasurements==="20"}/>20</label>
+                            <label><input name="rb" type="radio" value="10" onChange={handleRadio} checked={NumMeasurements==="10"}/>10</label>
+                            */}
                             {measurementData}
                             </div>
     }
