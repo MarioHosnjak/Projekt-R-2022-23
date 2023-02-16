@@ -10,7 +10,7 @@ const SenzorPage = () => {
     var [idSenzora, setIdSenzora] = useState("Default");
     const [latestMeasurement, setLatestMeasurement] = useState();
     const [allMeasurements, setAllMeasurements] = useState();
-    var [NumMeasurements, setNumMeasurements] = useState("all");
+    var [NumMeasurements, setNumMeasurements] = useState("30");
     var[lastNoOfData, setlastNoOfData] = useState();
     var maxSuggested = {
         "humidity": 100,
